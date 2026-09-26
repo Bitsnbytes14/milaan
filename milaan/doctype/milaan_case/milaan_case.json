@@ -16,6 +16,8 @@
   "purchase_receipt",
   "purchase_invoice",
   "supplier",
+  "blocked_amount",
+  "next_action",
   "resolution_section",
   "resolution_notes",
   "resolved_on"
@@ -94,6 +96,18 @@
    "fieldtype": "Link",
    "label": "Supplier",
    "options": "Supplier"
+  },
+  {
+   "fieldname": "blocked_amount",
+   "fieldtype": "Currency",
+   "label": "Amount waiting for resolution",
+   "read_only": 1
+  },
+  {
+   "fieldname": "next_action",
+   "fieldtype": "Small Text",
+   "label": "What needs to happen next",
+   "read_only": 1
   },
   {
    "fieldname": "resolution_section",

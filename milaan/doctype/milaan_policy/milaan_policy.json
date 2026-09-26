@@ -1,0 +1,32 @@
+{
+ "actions": [],
+ "autoname": "field:policy_name",
+ "creation": "2026-09-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": ["policy_name", "enabled", "company", "supplier", "item_group", "receipt_required", "receipt_age_days", "quantity_tolerance_percent", "rate_tolerance_percent"],
+ "fields": [
+  {"fieldname": "policy_name", "fieldtype": "Data", "in_list_view": 1, "label": "Policy name", "reqd": 1, "unique": 1},
+  {"default": "1", "fieldname": "enabled", "fieldtype": "Check", "in_list_view": 1, "label": "Enabled"},
+  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company"},
+  {"fieldname": "supplier", "fieldtype": "Link", "label": "Supplier", "options": "Supplier"},
+  {"fieldname": "item_group", "fieldtype": "Link", "label": "Item group", "options": "Item Group"},
+  {"default": "1", "fieldname": "receipt_required", "fieldtype": "Check", "label": "Require a Purchase Receipt before payment"},
+  {"default": "7", "fieldname": "receipt_age_days", "fieldtype": "Int", "label": "Days before an uninvoiced receipt is overdue"},
+  {"fieldname": "quantity_tolerance_percent", "fieldtype": "Percent", "label": "Quantity tolerance"},
+  {"fieldname": "rate_tolerance_percent", "fieldtype": "Percent", "label": "Rate tolerance"}
+ ],
+ "module": "Milaan",
+ "name": "Milaan Policy",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {"create": 1, "delete": 1, "email": 1, "export": 1, "print": 1, "read": 1, "report": 1, "role": "System Manager", "share": 1, "write": 1},
+  {"create": 1, "email": 1, "export": 1, "print": 1, "read": 1, "report": 1, "role": "Accounts Manager", "share": 1, "write": 1},
+  {"create": 1, "email": 1, "export": 1, "print": 1, "read": 1, "report": 1, "role": "Purchase Manager", "share": 1, "write": 1}
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

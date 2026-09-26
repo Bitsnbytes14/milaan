@@ -10,6 +10,16 @@ app_license = "mit"
 
 required_apps = ["erpnext"]
 
+doc_events = {
+	"Purchase Invoice": {
+		"on_submit": "milaan.events.purchase_invoice.create_missing_receipt_case",
+	}
+}
+
+scheduler_events = {
+	"daily": ["milaan.services.exception_detection.create_overdue_receipt_cases"],
+}
+
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
 # 	{
