@@ -2,17 +2,31 @@ import frappe
 from frappe.utils import add_days, nowdate
 
 
-def get_policy(company, supplier):
-	filters = {"enabled": 1, "receipt_required": 1}
-	if supplier:
-		policy = frappe.get_all("Milaan Policy", filters={**filters, "supplier": supplier}, pluck="name", limit=1)
-		if policy:
-			return frappe.get_doc("Milaan Policy", policy[0])
-	if company:
-		policy = frappe.get_all("Milaan Policy", filters={**filters, "company": company}, pluck="name", limit=1)
-		if policy:
-			return frappe.get_doc("Milaan Policy", policy[0])
-	return None
+def get_policy(company, supplier, items=()):
+	item_codes = [item.get("item_code") for item in items if item.get("item_code")]
+	item_groups = set()
+	if item_codes:
+		item_groups = set(frappe.get_all("Item", filters={"name": ["in", item_codes]}, pluck="item_group"))
+
+	best_policy = None
+	best_score = -1
+	for policy in frappe.get_all(
+		"Milaan Policy",
+		filters={"enabled": 1, "receipt_required": 1},
+		fields=["name", "company", "supplier", "item_group"],
+	):
+		if policy.supplier and policy.supplier != supplier:
+			continue
+		if policy.company and policy.company != company:
+			continue
+		if policy.item_group and policy.item_group not in item_groups:
+			continue
+		score = bool(policy.supplier) * 4 + bool(policy.company) * 2 + bool(policy.item_group)
+		if score > best_score:
+			best_policy = policy.name
+			best_score = score
+
+	return frappe.get_doc("Milaan Policy", best_policy) if best_policy else None
 
 
 def has_missing_receipt(items):
@@ -27,7 +41,7 @@ def create_case(values):
 
 
 def create_missing_receipt_case(doc, method=None):
-	policy = get_policy(doc.company, doc.supplier)
+	policy = get_policy(doc.company, doc.supplier, doc.items)
 	if not policy or not has_missing_receipt(doc.items):
 		return None
 	return create_case(
