@@ -13,7 +13,11 @@ It will identify mismatches between Purchase Orders, Purchase Receipts, and Purc
 
 ## Local development
 
-This repository will be scaffolded as a Frappe app once the local Docker-based development environment is ready. The app will target Frappe and ERPNext v16.
+Milaan targets Frappe and ERPNext v16. Start the local Frappe development environment from
+`D:\frappe\frappe_docker`, then open the `milaan.localhost` site in the bench container.
+
+The initial application exposes the `Milaan Case` DocType. It records the exception, the
+related ERPNext documents, its owner, severity, and resolution notes.
 
 ## Product principle
 
