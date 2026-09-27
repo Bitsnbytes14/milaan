@@ -13,6 +13,8 @@
  "shortcuts": [
   {"color": "Orange", "doc_view": "List", "label": "Open Cases", "link_to": "Milaan Case", "stats_filter": "[[\"Milaan Case\",\"status\",\"!=\",\"Resolved\"]]", "type": "DocType"},
   {"color": "Red", "doc_view": "List", "label": "High Severity", "link_to": "Milaan Case", "stats_filter": "[[\"Milaan Case\",\"severity\",\"in\",[\"High\",\"Critical\"]]]", "type": "DocType"},
+  {"color": "Blue", "doc_view": "List", "label": "Waiting on Supplier", "link_to": "Milaan Case", "stats_filter": "[[\"Milaan Case\",\"status\",\"=\",\"Waiting on Supplier\"]]", "type": "DocType"},
+  {"color": "Green", "doc_view": "List", "label": "Resolved Cases", "link_to": "Milaan Case", "stats_filter": "[[\"Milaan Case\",\"status\",\"=\",\"Resolved\"]]", "type": "DocType"},
   {"color": "Blue", "doc_view": "List", "label": "Policies", "link_to": "Milaan Policy", "stats_filter": "[]", "type": "DocType"}
  ],
  "title": "Milaan",
