@@ -1,0 +1,20 @@
+{
+ "app": "milaan",
+ "charts": [],
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<b>Milaan exception queue</b>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Milaan Case\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Milaan Policy\",\"col\":4}}]",
+ "doctype": "Workspace",
+ "is_hidden": 0,
+ "label": "Milaan",
+ "links": [],
+ "module": "Milaan",
+ "name": "Milaan",
+ "owner": "Administrator",
+ "public": 1,
+ "shortcuts": [
+  {"color": "Orange", "doc_view": "List", "label": "Open Cases", "link_to": "Milaan Case", "stats_filter": "[[\"Milaan Case\",\"status\",\"!=\",\"Resolved\"]]", "type": "DocType"},
+  {"color": "Red", "doc_view": "List", "label": "High Severity", "link_to": "Milaan Case", "stats_filter": "[[\"Milaan Case\",\"severity\",\"in\",[\"High\",\"Critical\"]]]", "type": "DocType"},
+  {"color": "Blue", "doc_view": "List", "label": "Policies", "link_to": "Milaan Policy", "stats_filter": "[]", "type": "DocType"}
+ ],
+ "title": "Milaan",
+ "type": "Workspace"
+}
