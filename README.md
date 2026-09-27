@@ -19,6 +19,29 @@ Milaan targets Frappe and ERPNext v16. Start the local Frappe development enviro
 The initial application exposes the `Milaan Case` DocType. It records the exception, the
 related ERPNext documents, its owner, severity, and resolution notes.
 
+## Installation
+
+Milaan requires ERPNext v16. From a Frappe bench:
+
+```bash
+bench get-app https://github.com/Bitsnbytes14/milaan.git --branch main
+bench --site your-site install-app milaan
+```
+
+Create at least one **Milaan Policy** before submitting invoices. A policy can
+match a supplier, company, or item group. The most specific matching policy is
+used. Use the Milaan workspace to review cases and policies.
+
+## Operations
+
+- Submit a Purchase Invoice without a required Purchase Receipt to create an
+  exception case automatically.
+- Use **Run overdue receipt scan** as a System Manager when you need an
+  immediate check; the same scan runs daily.
+- Resolve cases with notes so the audit timeline explains the outcome.
+
+See [the demo guide](docs/demo.md) for a complete walkthrough.
+
 ## Product principle
 
 The first version is deterministic. It will use ERPNext document data and configurable rules rather than an LLM.
