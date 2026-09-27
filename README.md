@@ -42,7 +42,7 @@ bench start
 Open `http://localhost:8000`, sign in as an Administrator, and open the
 **Milaan** workspace from Desk.
 
-For the Docker development environment used in this repository:
+For the Docker development environment used in this repository (Windows + Docker Desktop):
 
 ```powershell
 cd D:\frappe\frappe_docker
@@ -53,6 +53,18 @@ docker compose -f .devcontainer/docker-compose.yml exec -w /workspace/developmen
 
 The final command keeps the server running in that terminal. In a devcontainer,
 port 8000 is forwarded automatically; otherwise expose port 8000 in Docker.
+
+Once `bench start` is running, open **http://milaan.localhost:8000** (not
+plain `localhost:8000`, which serves whichever site is configured as the
+bench default) and sign in as `Administrator` / `admin`. If `milaan.localhost`
+does not resolve in your browser, add `127.0.0.1 milaan.localhost` to
+`C:\Windows\System32\drivers\etc\hosts`.
+
+Milaan's source is bind-mounted into the container from a separate path
+(`apps/milaan`), and file-change notifications do not always reach that mount
+on Docker Desktop for Windows, so the `bench start` auto-reloader can miss
+edits under `milaan/`. If a Python change does not seem to take effect,
+stop `bench start` in its terminal (Ctrl+C) and run it again.
 
 Create at least one **Milaan Policy** before submitting invoices. A policy can
 match a supplier, company, or item group. The most specific matching policy is
