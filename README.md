@@ -28,6 +28,32 @@ bench get-app https://github.com/Bitsnbytes14/milaan.git --branch main
 bench --site your-site install-app milaan
 ```
 
+## Run locally
+
+After installing Milaan into a development bench, run the migration and start
+Frappe:
+
+```bash
+cd frappe-bench
+bench --site your-site migrate
+bench start
+```
+
+Open `http://localhost:8000`, sign in as an Administrator, and open the
+**Milaan** workspace from Desk.
+
+For the Docker development environment used in this repository:
+
+```powershell
+cd D:\frappe\frappe_docker
+docker compose -f .devcontainer/docker-compose.yml up -d
+docker compose -f .devcontainer/docker-compose.yml exec -w /workspace/development/frappe-bench frappe bench --site milaan.localhost migrate
+docker compose -f .devcontainer/docker-compose.yml exec -w /workspace/development/frappe-bench frappe bench start
+```
+
+The final command keeps the server running in that terminal. In a devcontainer,
+port 8000 is forwarded automatically; otherwise expose port 8000 in Docker.
+
 Create at least one **Milaan Policy** before submitting invoices. A policy can
 match a supplier, company, or item group. The most specific matching policy is
 used. Use the Milaan workspace to review cases and policies.
