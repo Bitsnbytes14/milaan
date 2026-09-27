@@ -1,5 +1,5 @@
 import frappe
-from frappe.utils import add_days, nowdate
+from frappe.utils import add_days, getdate, nowdate
 
 
 def get_policy(company, supplier, items=()):
@@ -44,12 +44,14 @@ def create_missing_receipt_case(doc, method=None):
 	policy = get_policy(doc.company, doc.supplier, doc.items)
 	if not policy:
 		return None
+	purchase_order = next((item.purchase_order for item in doc.items if item.purchase_order), None)
+	purchase_receipt = next((item.purchase_receipt for item in doc.items if item.purchase_receipt), None)
 	case = None
 	if has_missing_receipt(doc.items):
 		case = create_case(
 		{
 			"purchase_invoice": doc.name,
-			"purchase_order": next((item.purchase_order for item in doc.items if item.purchase_order), None),
+			"purchase_order": purchase_order,
 			"supplier": doc.supplier,
 			"case_owner": doc.owner,
 			"severity": "High",
@@ -59,7 +61,7 @@ def create_missing_receipt_case(doc, method=None):
 		}
 	)
 	for reason, message in find_tolerance_exceptions(doc.items, policy):
-		case = create_case({"purchase_invoice": doc.name, "supplier": doc.supplier, "case_owner": doc.owner, "severity": "High", "reason": reason, "blocked_amount": doc.grand_total, "next_action": message}) or case
+		case = create_case({"purchase_invoice": doc.name, "purchase_order": purchase_order, "purchase_receipt": purchase_receipt, "supplier": doc.supplier, "case_owner": doc.owner, "severity": "High", "reason": reason, "blocked_amount": doc.grand_total, "next_action": message}) or case
 	return case
 
 
@@ -88,7 +90,7 @@ def create_overdue_receipt_cases():
 		if policy.supplier:
 			filters["supplier"] = policy.supplier
 		for receipt in frappe.get_all("Purchase Receipt", filters=filters, fields=["name", "supplier", "company", "posting_date", "grand_total", "owner"]):
-			if receipt.posting_date > add_days(nowdate(), -policy.receipt_age_days):
+			if getdate(receipt.posting_date) > add_days(getdate(nowdate()), -policy.receipt_age_days):
 				continue
 			if has_submitted_invoice_for_receipt(receipt.name):
 				continue
